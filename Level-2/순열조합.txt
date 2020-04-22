@@ -1,0 +1,59 @@
+재귀 함수를 이용한 DFS 구현 (경우의 수 <순열, 조합>를 구현 시 사용됨)
+조합 - LinkedList를 이용하여 구현
+public static void Combination(LinkedList<Integer> list, int n, int r, int index) {
+	if (r==0) {
+		for(int i : list) {
+			System.out.print(i + " ");
+		}System.out.println();
+		
+		return;
+	} // r == 0 -> n개의 숫자 중 r개를 모두 골랐을 때
+	if (index==n) return; // 제시된 numbers의 끝 index까지 탐색완료했을 때
+	
+	list.add(index);
+	Combination(list, n, r-1, index+1, sum, numbers, target);
+	list.removeLast();
+	Combination(list, n, r, index+1, sum, numbers, target);
+}
+
+
+static int[] arr = new int[2];
+private static void solve(int idx,int cnt) {
+    // cnt(선택 개수)가 2개가 되면 출력
+    if(cnt==2) {
+        System.out.println(arr[0]+"  "+arr[1]);
+        return;
+    }
+    
+    // idx가 2를 벗어나면 종료
+    if(idx>=3) return;
+    
+    // 자신을 포함
+    arr[cnt] = idx;
+    solve(idx+1,cnt+1);
+    // 자신을 미포함
+    solve(idx+1,cnt);
+}
+n개의 숫자 중 중복을 허용하지 않고 r개의 숫자롤 뽑는 방법이다.
+
+순열
+static boolean[] selected; // 방문 확인
+static int[] per;
+public static void Permutation(int pos, String[] data, char[] friends) {
+		if (pos == 8) {
+			String value = "";
+			for(int i=0; i<8; i++)
+				value += friends[per[i]];
+			
+			return;
+		}
+		
+		for(int i=0; i<8; i++) {
+			if (!selected[i]) {
+				selected[i] = true;
+				per[pos] = i;
+				Permutation(pos+1, data, friends);
+				selected[i] = false;
+			}
+		}
+	}
